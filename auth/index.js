@@ -28,11 +28,11 @@ const check = {
 
 const getToken = (auth) =>{
     if(!auth){
-        throw new Error('No viene Token')
+        throw error('No viene token', 401)
     }
 
     if(auth.indexOf('Bearer ')=== -1){
-        throw new Error('Formato invalido')
+        throw error('Formato Invalido', 401)
     }
 
     let token = auth.replace('Bearer ', '')

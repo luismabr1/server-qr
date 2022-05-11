@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "env": {
+        "MYSQL_HOST":"remotemysql.com"
+    },
+    "functions": {
+        "api/index.js": {
+          "includeFiles": "vercel-php@0.1.0"
+        }
+    },
+    
+        "rewrites": [
+          { "source": "/api/auth(.*)", "destination": "/api/index.js" },
+          { "source": "/api/user(.*)", "destination": "/api/index.js" }
+        ]
+}
