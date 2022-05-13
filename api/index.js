@@ -7,6 +7,7 @@ const config =require('../config.js')
 const user = require('./components/user/user-network')
 const auth = require('./components/auth/auth-network')
 const equipos = require('./components/equipos/equipos-network')
+const registros = require('./components/registros/registros-network')
 const errors = require('../network/errors')
 
 const app= express()
