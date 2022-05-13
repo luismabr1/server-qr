@@ -18,6 +18,7 @@ const swaggerDoc = require('./swagger.json')
 //router
 app.use('/api/user', user)
 app.use('/api/equipos', equipos)
+app.use('/api/registros', registros)
 app.use('/api/auth', auth)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc))
 
