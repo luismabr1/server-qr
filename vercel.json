@@ -5,12 +5,21 @@
     },
     "functions": {
         "api/index.js": {
-          "includeFiles": "vercel-php@0.1.0"
+          "includeFiles": "vercel-node@0.1.0"
         }
     },
     
         "rewrites": [
           { "source": "/api/auth(.*)", "destination": "/api/index.js" },
-          { "source": "/api/user(.*)", "destination": "/api/index.js" }
+          { "source": "/api/user(.*)", "destination": "/api/index.js" },
+          { "source": "/api/equipos(.*)", "destination": "/api/index.js" },
+          { "source": "/api/marcas(.*)", "destination": "/api/index.js" },
+          { "source": "/api/modelos(.*)", "destination": "/api/index.js" },
+          { "source": "/api/tipos(.*)", "destination": "/api/index.js" },
+          { "source": "/api/departamentos(.*)", "destination": "/api/index.js" },
+          { "source": "/api/cargos(.*)", "destination": "/api/index.js" },
+          { "source": "/api/registros(.*)", "destination": "/api/index.js" },
+          { "source": "/mysql(.*)", "destination": "/api/index.js" },
+          { "source": "/api-doc(.*)", "destination": "/api/index.js" }
         ]
 }

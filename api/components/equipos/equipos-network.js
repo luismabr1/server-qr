@@ -24,8 +24,8 @@ function list(req, res, next) {
 function get(req, res, next){
     //IMPORTANTE ES PARAM'S'
     Controller.get(req.params.id)
-        .then((user) => {
-            response.success(req, res, user, 200)
+        .then((equipo) => {
+            response.success(req, res, equipo, 200)
         })
         .catch(next)
 }

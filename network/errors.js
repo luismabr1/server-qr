@@ -1,6 +1,6 @@
 const response = require('./response')
-const Sentry = require("@sentry/node");
-const config  = require("../config");
+ const Sentry = require("@sentry/node");
+const config  = require("../config"); 
 
 Sentry.init({ 
     dsn: `https://${config.sentry.dns}.ingest.sentry.io/${config.sentry.id}`, 
@@ -9,16 +9,16 @@ Sentry.init({
   // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
 
-    });
+    }); 
 
 function errors(err, req, res, next){
     Sentry.captureException(err);
     console.error(err.stack);
-    next(err);
+    next(err); 
 
-    console.log('[error]', err)
+    console.log('[error]', err.stack)
 
-    const message = err.message || 'Error interno'
+    const message = err.message || 'Error interno aqui'
     const status = err.statusCode || 500
 
     response.error(req, res, message, status)

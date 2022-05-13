@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-        "build": "next build --output public"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -18,7 +15,8 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nanoid": "^3.3.4",
-    "request": "^2.88.2",
+    "node-fetch": "^2.6.7",
+    "request": "2.88.0",
     "swagger-ui-express": "^4.3.0"
   }
 }

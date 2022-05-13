@@ -8,6 +8,7 @@ const router = express.Router()
 
 //Routes
 router.get('/', list)
+router.post('/create/:id', create)
 router.get('/:id', get)
 router.post('/', upsert)
 router.put('/', secure('update'), upsert)

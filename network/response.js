@@ -1,10 +1,10 @@
 exports.success = (req, res, message, status) =>{
     let statusCode = status || 200
-    let statusMessage = message || ''
+    let statusMessage = message || 'Bien hecho!'
     res.status(statusCode).send({
         error:false,
-        status:status,
-        body:message
+        status:statusCode,
+        body:statusMessage
     })
 }
 
@@ -13,7 +13,7 @@ exports.error = (req, res, message, status) =>{
     let statusMessage = message || 'Internal server Error';
     res.status(statusCode).send({
         error:false,
-        status:status,
-        body:message
+        status:statusCode,
+        body:statusMessage
     })
 }
