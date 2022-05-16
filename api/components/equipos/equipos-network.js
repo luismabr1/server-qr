@@ -37,13 +37,6 @@ function upsert(req, res, next) {
         })
         .catch(next)
 }
-function create(req, res, next){
-    Controller.usuarioCargo(req.user.id, req.params.id)
-    .then(data => {
-        response.success(req, res, data, 201);
-    })
-    .catch(next);
-}
 
 function upsert(req, res, next){
     Controller.upsert(req.body)

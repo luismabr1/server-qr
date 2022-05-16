@@ -8,7 +8,6 @@ const router = express.Router()
 
 //Routes
 router.get('/', list)
-router.post('/create/:id', create)
 router.get('/:id', get)
 router.post('/', upsert)
 router.put('/', secure('update'), upsert)
@@ -25,25 +24,18 @@ function list(req, res, next) {
 function get(req, res, next){
     //IMPORTANTE ES PARAM'S'
     Controller.get(req.params.id)
-        .then((user) => {
-            response.success(req, res, user, 200)
+        .then((departamento) => {
+            response.success(req, res, departamento, 200)
         })
         .catch(next)
 }
 
 function upsert(req, res, next) {
     Controller.get(req.params.id)
-        .then((user) => {
-            response.success(req, res, user, 200)
+        .then((departamento) => {
+            response.success(req, res, departamento, 200)
         })
         .catch(next)
-}
-function create(req, res, next){
-    Controller.usuarioCargo(req.user.id, req.params.id)
-    .then(data => {
-        response.success(req, res, data, 201);
-    })
-    .catch(next);
 }
 
 function upsert(req, res, next){
