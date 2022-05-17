@@ -76,6 +76,17 @@ module.exports = (injectedStore) => {
         })
     }
 
+    async function info(id) {
+                            //    to,     from
+        const join = {marcas: ['marca_id','id'], usuarios: ['usuario_id','id']}
+        /* join[TABLA] = ['id', equipo]; // { user: 'user_to' } */
+        const query = id;
+
+
+		
+		return await injectedStore.queryAll(query);
+	}
+
     return {
         list,
         get,
@@ -83,6 +94,7 @@ module.exports = (injectedStore) => {
         equipoTipo,
         equipoMarca,
         usuarioEquipo,
-        equipoModelo
+        equipoModelo,
+        info
     }
 }

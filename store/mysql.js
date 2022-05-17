@@ -79,7 +79,7 @@ function upsert(table, data) {
     }
 }
 
-function query(table, query, join) {
+/* function query(table, query, join) {
     let joinQuery = '';
     if (join) {
         const key = Object.keys(join)[0];
@@ -93,11 +93,45 @@ function query(table, query, join) {
             resolve(res[0] || null);
         })
     })
+} */
+function queryAll(query) {
+    return new Promise((resolve, reject) => {
+        const queryFinal = `SELECT equipos.id AS equipo_id, equipos.serial, marcas.nombre AS marca, modelos.nombre AS modelo, tipos.nombre AS tipo, usuarios.nombre AS usuario, departamentos.nombre AS departamento, cargos.nombre AS cargo FROM equipos, usuarios, marcas, departamentos, cargos, modelos, tipos WHERE usuarios.id = equipos.usuario_id AND equipos.id = ? AND marcas.id = equipos.marca_id AND departamentos.id = usuarios.departamento_id AND cargos.id = usuarios.cargo_id AND tipos.id = equipos.tipo_id AND modelos.id = equipos.modelo_id`
+        console.log(queryFinal)
+        connection.query(queryFinal, query,  (error, data) => {
+            if (error) return reject(error);
+            resolve(data);
+        })
+    });
+}
+
+function query(table, query, join = null) {
+    let joinQuery = '';
+    if (join) {
+        console.log(join)
+        Object.entries(join).forEach(([key, value]) => {
+            console.log(key)
+            console.log(value)
+            const [to, from] = value;
+            joinQuery+= ` INNER JOIN ${key} ON ${key}.${from} = ${table}.${to}`;
+        })
+        console.log(joinQuery)
+    }
+    /* debug(`${table}, ${JSON.stringify(query)}, ${joinQuery}`); */
+    return new Promise((resolve, reject) => {
+        const queryFinal = `SELECT * FROM ${table} ${joinQuery} WHERE ${table}.id=?`
+        console.log(queryFinal)
+        connection.query(queryFinal, query,  (error, data) => {
+            if (error) return reject(error);
+            resolve(data);
+        })
+    });
 }
 
 module.exports = {
     list,
     get,
     upsert,
-    query
+    query,
+    queryAll
 };

@@ -55,12 +55,21 @@ module.exports = (injectedStore) => {
             id_cargo: cargo,
         })
     }
+    async function info(id) {
+        //    to,     from
+        const join = {departamentos: ['departamento_id','id'], cargos: ['cargo_id','id']}
+        /* join[TABLA] = ['id', equipo]; // { user: 'user_to' } */
+        const query = id;
+
+    return await injectedStore.query(TABLA, query, join);
+}
 
     return {
         list,
         get,
         upsert,
-        usuarioCargo
+        usuarioCargo,
+        info
     }
     
 }

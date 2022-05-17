@@ -9,6 +9,7 @@ const router = express.Router()
 //Routes
 router.get('/', list)
 router.get('/:id', get)
+router.get('/info/:id', usuarioInfo)
 router.post('/', upsert)
 router.put('/', secure('update'), upsert)
 
@@ -37,12 +38,12 @@ function upsert(req, res, next) {
         })
         .catch(next)
 }
-function create(req, res, next){
-    Controller.usuarioCargo(req.user.id, req.params.id)
-    .then(data => {
-        response.success(req, res, data, 201);
+function usuarioInfo(req, res, next){
+    Controller.info(req.params.id)
+    .then((usuario) => {
+        response.success(req, res, usuario, 200)
     })
-    .catch(next);
+    .catch(next)
 }
 
 function upsert(req, res, next){

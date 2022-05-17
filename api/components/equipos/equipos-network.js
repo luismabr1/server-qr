@@ -8,6 +8,7 @@ const router = express.Router()
 
 //Routes
 router.get('/', list)
+router.get('/info/:id', equipoInfo)
 router.get('/:id', get)
 router.post('/', upsert)
 router.put('/', secure('update'), upsert)
@@ -36,6 +37,14 @@ function upsert(req, res, next) {
             response.success(req, res, user, 200)
         })
         .catch(next)
+}
+
+function equipoInfo(req, res, next){
+    Controller.info(req.params.id)
+    .then((equipo) => {
+        response.success(req, res, equipo, 200)
+    })
+    .catch(next)
 }
 
 function upsert(req, res, next){
