@@ -19,29 +19,20 @@ module.exports = (injectedStore) => {
     }
     
     const upsert = async (body) => {
-        const user = {
+        const usuario = {
             nombre: body.nombre,
-            username:body.username,
             apellido: body.apellido,
             cedula: body.cedula,
             sexo: body.sexo,
             departamento_id:body.departamento_id,
             equipo_id: body.equipo_id,
-            cargo_id: body.cargo_id
+            cargo_id: body.cargo_id,
+            
         }
 
         if(body.id){
-            user.id = body.id
-        }
-
-        if(body.password || body.username){
+            usuario.id = body.id
             return injectedStore.upsert(TABLA, user)
-           
-        }else{
-            await auth.upsert({
-                username: body.username,
-                password: body.password
-            })
         }
     }
 

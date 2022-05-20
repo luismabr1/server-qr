@@ -6,7 +6,7 @@ var cors = require('cors')
 const swaggerUI = require('swagger-ui-express')
 
 const config =require('../config.js')
-const user = require('./components/user/user-network')
+const usuarios = require('./components/usuarios/usuarios-network')
 const auth = require('./components/auth/auth-network')
 const equipos = require('./components/equipos/equipos-network')
 const cargos = require('./components/cargos/cargos-network')
@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 const swaggerDoc = require('./swagger.json')
 
 //router
-app.use('/api/user', user)
+app.use('/api/usuarios', usuarios)
 app.use('/api/equipos', equipos)
 app.use('/api/registros', registros)
 app.use('/api/cargos', cargos)

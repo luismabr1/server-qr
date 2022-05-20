@@ -72,12 +72,13 @@ function update(table, data) {
 }
 
 function upsert(table, data) {
-    if (data && data.id) {
+    if (data && data.is_active) {
         return update(table, data);
     } else {
         return insert(table, data);
     }
 }
+
 
 /* function query(table, query, join) {
     let joinQuery = '';
@@ -107,31 +108,53 @@ function queryAll(query) {
 
 function query(table, query, join = null) {
     let joinQuery = '';
+    let dato = query
     if (join) {
-        console.log(join)
         Object.entries(join).forEach(([key, value]) => {
             console.log(key)
             console.log(value)
             const [to, from] = value;
             joinQuery+= ` INNER JOIN ${key} ON ${key}.${from} = ${table}.${to}`;
         })
-        console.log(joinQuery)
     }
-    /* debug(`${table}, ${JSON.stringify(query)}, ${joinQuery}`); */
     return new Promise((resolve, reject) => {
-        const queryFinal = `SELECT * FROM ${table} ${joinQuery} WHERE ${table}.id=?`
+        const queryFinal = `SELECT * FROM ${table}${joinQuery} WHERE ${table}.id=? OR ${table}.username=?`
         console.log(queryFinal)
-        connection.query(queryFinal, query,  (error, data) => {
-            if (error) return reject(error);
+        console.log(dato)
+        connection.query(queryFinal, dato, (error, data) => {
+            console.error(error)
+            if (error) return(
+                reject(error)
+                ) 
             resolve(data);
         })
     });
 }
 
+
+    function queryLogin(table, query, join) {
+        let joinQuery = '';
+        if (join) {
+            const key = Object.keys(join)[0];
+            const val = join[key];
+            joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.id`;
+        }
+        return new Promise((resolve, reject) => {
+            connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, query, (err, res) => {
+                if (err) return reject(err);
+                resolve(res[0] || null);
+            })
+        })
+    }
+
+
 module.exports = {
     list,
     get,
     upsert,
+    update,
+    insert,
     query,
-    queryAll
+    queryAll,
+    queryLogin
 };
