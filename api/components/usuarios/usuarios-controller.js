@@ -41,14 +41,26 @@ module.exports = (injectedStore, injectedCache) => {
             departamento_id:body.departamento_id,
             equipo_id: body.equipo_id,
             cargo_id: body.cargo_id,
-            
         }
 
-        if(body.id){
-            usuario.id = body.id
+        if (body.is_active) {
+            return injectedStore.upsert(TABLA, {
+                id:body.id,
+                nombre: body.nombre,
+                apellido: body.apellido,
+                cedula: body.cedula,
+                sexo: body.sexo,
+                departamento_id:body.departamento_id,
+                equipo_id: body.equipo_id,
+                cargo_id: body.cargo_id,
+                is_active:body.is_active
+                })
+            }
             return injectedStore.upsert(TABLA, usuario)
         }
-    }
+
+
+    
 
     const remove = (id) => {
         return injectedStore.get(TABLA, id)
