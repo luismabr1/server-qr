@@ -1,5 +1,5 @@
 const store = require('../../../store/mysql');
-const cache = require('../../../store/redis');
+/* const cache = require('../../../store/redis'); */
 const config = require('../../../config');
 
 /* let store, cache;
@@ -13,4 +13,4 @@ if (config.remoteDB === true) {
 
 const ctrl = require('./usuarios-controller');
 
-module.exports = ctrl(store, cache);
+module.exports = ctrl(store);
