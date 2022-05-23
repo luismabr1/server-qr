@@ -46,7 +46,7 @@ module.exports = (injectedStore, injectedCache) => {
 
         if(body.id){
             usuario.id = body.id
-            return injectedStore.upsert(TABLA, user)
+            return injectedStore.upsert(TABLA, usuario)
         }
     }
 
