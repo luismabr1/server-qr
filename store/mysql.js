@@ -72,7 +72,7 @@ function update(table, data) {
 }
 
 function upsert(table, data) {
-    if (data && data.is_active) {
+    if (data && data.is_active && data.id) {
         return update(table, data);
     } else {
         return insert(table, data);
