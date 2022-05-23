@@ -11,7 +11,7 @@
     
         "rewrites": [
           { "source": "/api/auth(.*)", "destination": "/api/index.js" },
-          { "source": "/api/user(.*)", "destination": "/api/index.js" },
+          { "source": "/api/usuarios(.*)", "destination": "/api/index.js" },
           { "source": "/api/equipos(.*)", "destination": "/api/index.js" },
           { "source": "/api/marcas(.*)", "destination": "/api/index.js" },
           { "source": "/api/modelos(.*)", "destination": "/api/index.js" },

@@ -3,10 +3,10 @@ const mysql = require('mysql');
 const config = require('../config');
 
 const dbconf = {
-    host: config.mysql.host || 'localhost',
-    user: config.mysql.user || 'root',
-    password: config.mysql.password || '',
-    database: config.mysql.database || 'modo_qr',
+    host:  config.mysql.host ||  'localhost',
+    user:  config.mysql.user ||  'root',
+    password:  config.mysql.password ||  '',
+     database:  config.mysql.database ||  'modo_qr',
 };
 
 let connection;

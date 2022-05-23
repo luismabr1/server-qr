@@ -1,6 +1,15 @@
-const store = require('../../../store/mysql')
-/* const store = require('../../../store/remote-mysql') */
-const ctrl = require('./usuarios-controller')
+// const store = require('../../../store/mysql');
+const config = require('../../../config');
 
-//inyectamos el store en el controlador
-module.exports = ctrl(store)
+let store, cache;
+if (config.remoteDB === true) {
+    store = require('../../../store/remote-mysql');
+    cache = require('../../../store/remote-cache');
+} else {
+    store = require('../../../store/mysql'); 
+    cache = require('../../../store/redis');
+}
+
+const ctrl = require('./usuarios-controller');
+
+module.exports = ctrl(store, cache);
