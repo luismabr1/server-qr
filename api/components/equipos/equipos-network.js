@@ -11,7 +11,10 @@ router.get('/', list)
 router.get('/info/:id', equipoInfo)
 router.get('/:id', get)
 router.post('/', upsert)
+router.post('/remove/:id', remove)
 router.put('/', secure('update'), upsert)
+router.put('/remove', secure('update'), remove)
+
 
 //Internal Functions
 function list(req, res, next) {
@@ -29,6 +32,16 @@ function get(req, res, next){
             response.success(req, res, equipo, 200)
         })
         .catch(next)
+}
+
+function remove(req, res, next) {
+    console.log(`estoy en remove network ${req.params.id}`)
+    Controller.remove(req.params.id)
+        .then((equipo) => {
+            response.success(req, res, equipo, 200);
+        })
+        .catch(next)
+    
 }
 
 function upsert(req, res, next) {

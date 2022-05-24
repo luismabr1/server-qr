@@ -10,6 +10,8 @@ router.get('/', list)
 router.get('/login', get);
 router.post('/', upsert);
 router.put('/edit', secure('update'), upsert);
+router.put('/remove', secure('update'), remove);
+
 
 /* router.post('/login', (req, res, next) => {
     Controller.login(req.body.username, req.body.password)
@@ -52,6 +54,17 @@ router.post('/login', (req, res, next) => {
 })
 
 function get(req, res) {
+    Controller.get(req.params.id)
+        .then((user) => {
+            response.success(req, res, user, 200);
+        })
+        .catch((err) => {
+            response.error(req, res, err.message, 500);
+        });
+    
+}
+
+function remove(req, res) {
     Controller.get(req.params.id)
         .then((user) => {
             response.success(req, res, user, 200);

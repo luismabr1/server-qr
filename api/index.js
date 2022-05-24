@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 var cors = require('cors')
-
+const helmet = require("helmet");
 
 const swaggerUI = require('swagger-ui-express')
 
@@ -19,6 +19,7 @@ const tipos = require('./components/tipos/tipos-network')
 const errors = require('../network/errors')
 
 const app= express()
+app.use(helmet());
 app.use(cors())
 app.use(bodyParser.json())
 

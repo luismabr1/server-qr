@@ -23,10 +23,11 @@ module.exports = (injectedStore) => {
     const upsert = async (body) => {
         const equipo = {
             usuario_id: body.usuario_id,
-            marca_id:body.marca_id,
+            marca_id: body.marca_id,
             modelo_id: body.modelo_id,
             serial: body.serial,
             tipo_id: body.tipo_id,
+            is_active: body.is_active
         }
 
         if(body.id){
@@ -35,17 +36,19 @@ module.exports = (injectedStore) => {
 
         let result =  await injectedStore.upsert(TABLA, equipo)
         let equipo_id = result.insertId
-
-        equipoTipo(equipo_id, body.tipo_id)
-        equipoMarca(equipo_id, body.marca_id)
-        usuarioEquipo(equipo_id, body.usuario_id)
-        equipoModelo(equipo_id, body.modelo_id)
+        if(equipo_id){
+            equipoModelo(equipo_id, body.modelo_id)
+            equipoTipo(equipo_id, body.tipo_id)
+            equipoMarca(equipo_id, body.marca_id)
+            usuarioEquipo(equipo_id, body.usuario_id)
+        }
 
         }
     
 
     const remove = (id) => {
-        return injectedStore.get(TABLA, id)
+        console.log(`remove controller ${id}`)
+        return injectedStore.remove(TABLA, id)
     }
 
     const equipoTipo = (equipo, tipo) => {
@@ -56,21 +59,21 @@ module.exports = (injectedStore) => {
     }
 
     const equipoMarca = (equipo, marca) => {
-        injectedStore.upsert(TABLA + '_marcas', {
+        return injectedStore.upsert(TABLA + '_marcas', {
             id_equipo: equipo,
             id_marca: marca,
         })
     }
-    const usuarioEquipo= (equipo, usuario) => {
-        injectedStore.upsert(TABLA + '_usuarios', {
+    const usuarioEquipo = (equipo, usuario) => {
+        return injectedStore.upsert(TABLA + '_usuarios', {
             id_usuario: usuario,
             id_equipo: equipo,
         })
     }
 
-    const equipoModelo = (equipo, modelo) =>{
-        //si envias una variable a esa constante TABLA te dice que no ojo
-        injectedStore.upsert(TABLA = 'equipos_modelos', {
+    //si envias una variable a esa constante TABLA te dice que no ojo
+    const equipoModelo = (equipo, modelo) => {
+        return injectedStore.upsert(TABLA + '_modelos', {
             modelo_id: modelo,
             equipo_id: equipo,
         })
@@ -91,6 +94,7 @@ module.exports = (injectedStore) => {
         list,
         get,
         upsert,
+        remove,
         equipoTipo,
         equipoMarca,
         usuarioEquipo,

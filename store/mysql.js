@@ -1,3 +1,4 @@
+const { consoleSandbox } = require('@sentry/utils');
 const mysql = require('mysql');
 
 const config = require('../config');
@@ -37,7 +38,7 @@ handleCon();
 
 function list(table) {
     return new Promise( (resolve, reject) => {
-        connection.query(`SELECT * FROM ${table}`, (err, data) => {
+        connection.query(`SELECT * FROM ${table} WHERE is_active=2`, (err, data) => {
             if (err) return reject(err);
             resolve(data);
         })
@@ -54,6 +55,7 @@ function get(table, id) {
 }
 
 function insert(table, data) {
+    console.log(`datos de la relacion en insert ${data}`)
     return new Promise((resolve, reject) => {
         connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) => {
             if (err) return reject(err);
@@ -63,6 +65,7 @@ function insert(table, data) {
 }
 
 function update(table, data) {
+    console.log(`estoy en update`)
     return new Promise((resolve, reject) => {
         connection.query(`UPDATE ${table} SET ? WHERE id=?`, [data, data.id], (err, result) => {
             if (err) return reject(err);
@@ -71,9 +74,23 @@ function update(table, data) {
     })
 }
 
+function remove(table, data) {
+    console.log(`estoy en remove mysql ${data}`)
+    return new Promise((resolve, reject) => {
+        const queryDelete=`UPDATE ${table} SET is_active=1 WHERE id= ? `
+        console.log(queryDelete)
+        connection.query(queryDelete, [data, data.id], (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+}
+
 function upsert(table, data) {
-    console.log(data)
-    if (data && data.is_active && data.id) {
+    const dataJson= JSON.stringify(data)
+    console.log(`aqui el console de data se ve activo ${data.is_active}`)
+    console.log(`aqui el console de data usert ${dataJson}`)
+    if (data.is_active || 0) {
         return update(table, data);
     } else {
         return insert(table, data);
@@ -154,8 +171,9 @@ module.exports = {
     get,
     upsert,
     update,
+    remove,
     insert,
     query,
     queryAll,
-    queryLogin
+    queryLogin,
 };

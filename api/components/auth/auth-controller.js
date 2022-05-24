@@ -47,7 +47,7 @@ module.exports = (injectedStore) => {
         console.log(authData)
         if(data.is_active){
         return injectedStore.upsert(TABLA, data)
-        }
+        } 
         return injectedStore.upsert(TABLA, authData)
     }
   
