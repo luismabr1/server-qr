@@ -90,9 +90,8 @@ function remove(table, data) {
 
 function upsert(table, data) {
     const dataJson= JSON.stringify(data)
-    console.log(`aqui el console de data se ve activo ${data.is_active}`)
-    console.log(`aqui el console de data usert ${dataJson}`)
-    if (data.is_active || 0) {
+
+    if (data.is_active || data.id) {
         return update(table, data);
     } else {
         return insert(table, data);

@@ -35,7 +35,8 @@ module.exports = (injectedStore) => {
     }
 
     const remove = (id) => {
-        return injectedStore.get(TABLA, id)
+        console.log(`remove controller ${id}`)
+        return injectedStore.remove(TABLA, id)
     }
 
     const equiposModelos = (marca, modelo) => {
@@ -49,7 +50,8 @@ module.exports = (injectedStore) => {
         list,
         get,
         upsert,
-        equiposModelos
+        equiposModelos,
+        remove
     }
     
 }
