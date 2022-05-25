@@ -9,6 +9,7 @@ const router = express.Router()
 //Routes
 router.get('/', list)
 router.get('/:id', get)
+router.post('/remove/:id', remove)
 router.post('/', upsert)
 router.put('/', secure('update'), upsert)
 
@@ -28,6 +29,16 @@ function get(req, res, next){
             response.success(req, res, departamento, 200)
         })
         .catch(next)
+}
+
+function remove(req, res, next) {
+    console.log(`estoy en remove network ${req.params.id}`)
+    Controller.remove(req.params.id)
+        .then((equipo) => {
+            response.success(req, res, equipo, 200);
+        })
+        .catch(next)
+    
 }
 
 function upsert(req, res, next) {
