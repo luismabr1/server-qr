@@ -4,10 +4,10 @@ const mysql = require('mysql');
 const config = require('../config');
 
 const dbconf = {
-    host:  config.mysql.host ||  'localhost',
+    host:  config.mysql.host ||   'localhost',
     user:  config.mysql.user ||  'root',
-    password:  config.mysql.password ||  '',
-     database:  config.mysql.database ||  'modo_qr',
+    password:  config.mysql.password ||   '',
+    database:  config.mysql.database || 'modo_qr',
 };
 
 let connection;
@@ -38,7 +38,9 @@ handleCon();
 
 function list(table) {
     return new Promise( (resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE is_active=2`, (err, data) => {
+        const queryLista = `SELECT * FROM ${table} WHERE is_active=2`
+        console.log(queryLista)
+        connection.query(queryLista, (err, data) => {
             if (err) return reject(err);
             resolve(data);
         })

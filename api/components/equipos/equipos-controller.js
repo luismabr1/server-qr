@@ -5,20 +5,32 @@ let TABLA = 'equipos'
 
 
 
-module.exports = (injectedStore) => {
+module.exports = (injectedStore, injectedCache) => {
     let store = injectedStore;
+    let cache = injectedCache;
     if (!store) {
         store = require('../../../store/dummy');
     }
-    const list = () => {
-        return injectedStore.list(TABLA)
+    else if (!cache) {
+        cache = require('../../../store/mysql');
+    }
+    const list = async () => {
+        let equipos = await cache.list(TABLA)
+        console.log(equipos)
+
+        if(!equipos){
+            console.log('No estabe en cache. Buscando en DB')
+            equipos = await injectedStore.list(TABLA)
+            cache.upsert(TABLA, equipos)
+        }else{
+            console.log('Nos traemos datos de cache')
+        }
+        return equipos
     }
 
     const get = (id) => {
         return injectedStore.get(TABLA, id)
     }
-
-
     
     const upsert = async (body) => {
         const equipo = {
