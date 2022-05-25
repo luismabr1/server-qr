@@ -24,7 +24,7 @@ module.exports = (injectedStore) => {
         }
 
         if(body.id){
-            user.id = body.id
+            departamento.id = body.id
         }
 
         return injectedStore.upsert(TABLA, departamento)
